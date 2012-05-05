@@ -19,6 +19,11 @@ foreach ($sourceUrls as $sourceUrl) {
 
     $finder = new \webignition\WebDocumentLinkUrlFinder\WebDocumentLinkUrlFinder();
     $finder->setSourceUrl($sourceUrl);
+    $finder->setRequestOptions(array(
+        'proxyhost' => 'localhost',
+        'proxyport' => 3128,
+        'proxytype' => HTTP_PROXY_HTTP
+    ));
 
     $urls = $finder->urls();
    

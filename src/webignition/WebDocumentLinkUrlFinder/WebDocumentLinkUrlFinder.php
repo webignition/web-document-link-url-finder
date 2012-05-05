@@ -15,7 +15,15 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
      *
      * @var \webignition\Http\Client\CachingClient 
      */
-    private $httpClient = null;    
+    private $httpClient = null;
+    
+    
+    /**
+     * Options to use with the interal \HttpRequest
+     * 
+     * @var array
+     */
+    private $requestOptions = array();
     
     
     /**
@@ -24,7 +32,8 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
      */
     public function urls() {        
         if (!$this->hasUrls()) {
-            $request = new \HttpRequest($this->getSourceUrl());           
+            $request = new \HttpRequest($this->getSourceUrl());
+            $request->setOptions($this->requestOptions);
             $response = $this->httpClient()->getResponse($request);
             
             if ($this->isCrawlableResponse($response)) {
@@ -35,6 +44,17 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
         }
         
         return parent::urls();
+    }
+    
+    
+    /**
+     * Set options to use with the interal \HttpRequest
+     *
+     * @see http://php.net/manual/en/http.request.options.php
+     * @param array $requestOptions 
+     */
+    public function setRequestOptions($requestOptions) {
+        $this->requestOptions = $requestOptions;
     }
     
     
@@ -54,7 +74,7 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
      */
     private function httpClient() {
         if (is_null($this->httpClient)) {
-            $this->httpClient = new \webignition\Http\Client\CachingClient();
+            $this->httpClient = new \webignition\Http\Client\Client();
             $this->httpClient->redirectHandler()->enable();
         }
         
