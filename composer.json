@@ -15,8 +15,8 @@
         "php": ">=5.3.0",
         "ext-http": "*",
         "webignition/http-client": "*",
-        "webignition/html-document-link-url-finder": "*"
-        
+        "webignition/html-document-link-url-finder": "*",
+        "webignition/url": "*"        
     },
     "repositories": [
         {
@@ -30,6 +30,10 @@
         {
             "type":"vcs",
             "url": "https://github.com/webignition/absolute-url-deriver"
-        }          
+        },
+        {
+            "type":"vcs",
+            "url": "https://github.com/webignition/url"
+        }        
     ]
 }
