@@ -23,6 +23,7 @@ Usage
 ### The "Hello World" example
 
 ```php
+<?php
 $sourceUrl = 'http://www.google.co.uk/search?q=Hello+World';
 
 echo "Finding link URLs in ".$sourceUrl."\n";
