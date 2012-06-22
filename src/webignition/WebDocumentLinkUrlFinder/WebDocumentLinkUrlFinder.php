@@ -28,12 +28,20 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
     
     /**
      *
+     * @var array
+     */
+    private $requestHeaders = array();
+    
+    
+    /**
+     *
      * @return array
      */
     public function urls() {        
         if (!$this->hasUrls()) {
             $request = new \HttpRequest($this->getSourceUrl());
             $request->setOptions($this->requestOptions);
+            $request->addHeaders($this->requestHeaders);
             $response = $this->httpClient()->getResponse($request);
             
             if ($this->isCrawlableResponse($response)) {
@@ -55,6 +63,20 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
      */
     public function setRequestOptions($requestOptions) {
         $this->requestOptions = $requestOptions;
+    }
+    
+    
+    /**
+     * Set headers to send with HTTP request
+     * 
+     * @param array $requestHeaders 
+     */
+    public function setRequestHeaders($requestHeaders = array()) {
+        if (!is_array($requestHeaders)) {
+            $requestHeaders = array();
+        }
+        
+        $this->requestHeaders = $requestHeaders;
     }
     
     
