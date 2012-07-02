@@ -42,7 +42,14 @@ class WebDocumentLinkUrlFinder extends \webignition\HtmlDocumentLinkUrlFinder\Ht
             $request = new \HttpRequest($this->getSourceUrl());
             $request->setOptions($this->requestOptions);
             $request->addHeaders($this->requestHeaders);
-            $response = $this->httpClient()->getResponse($request);
+            
+            try {
+                $response = $this->httpClient()->getResponse($request);
+            } catch (\webignition\Http\Client\Exception $e) {
+                if ($e->isDnsLookupFailureException()) {
+                    return array();
+                }
+            }            
             
             if ($this->isCrawlableResponse($response)) {
                 $this->setSourceContent($response->getBody());                
